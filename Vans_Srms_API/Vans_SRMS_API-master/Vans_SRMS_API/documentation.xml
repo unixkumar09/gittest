@@ -1,0 +1,225 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Vans_SRMS_API</name>
+    </assembly>
+    <members>
+        <member name="M:Vans_SRMS_API.Controllers.DeviceController.Get(System.String)">
+            <summary>
+            DEVELOPMENT TESTING ROUTE
+            </summary>
+            <param name="deviceNumber"></param>
+            <returns></returns>
+            <remarks>This route is for testing.  Should not be called from the handhelds.
+            Use this route to lookup information on a registered device number</remarks>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.DeviceController.Post(Vans_SRMS_API.ViewModels.DeviceNumber)">
+            <summary>
+            Use this route to associate a new handheld with the server.
+            </summary>
+            <param name="deviceNumber"></param>
+            <returns></returns>
+            <remarks>The server will assign a unique color and Identifier Key for this device.  
+            Use the returned Identifier Key in the Auth header.
+            If called twice from the same handheld, it will not register a duplicate device. 
+            It will return the existing color and key.</remarks>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.DeviceController.Delete(System.Int32)">
+            <summary>
+            Use this route to deactivate a device for the default store
+            </summary>
+            <param name="id">database DeviceId</param>
+            <returns></returns>
+            <remarks>Uses the database DeviceId instead of device number in case of duplicate device numbers.</remarks>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.LocationController.Random(System.Int32,System.Int32)">
+            <summary>
+            DEVELOPMENT TESTING ROUTE
+            </summary>
+            <param name="skip"></param>
+            <param name="take"></param>
+            <returns></returns>
+            <remarks>Grab any random locations from the database for testing purposes.</remarks>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.LocationController.CycleCount(Vans_SRMS_API.ViewModels.CycleCountInput)">
+            <summary>
+            Use this route to overwrite existing inventory records for a specific location
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+            <remarks>Pass a single Location barcode, any number of Product GTIN barcodes, and a timestamp for each Product scan.  
+            We'll record a timestamp for each Product in order to track the time it takes to scan each Product.</remarks>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.LocationController.Audit(Vans_SRMS_API.ViewModels.CycleCountInput)">
+            <summary>
+            Use this route to perform an audit on a Location.
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+            <remarks>Current inventory location will be compared to the system of record
+            and a report will be generated with overages and shortages.</remarks>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.LocationController.Details(System.String)">
+            <summary>
+            DEVELOPMENT TESTING ROUTE
+            </summary>
+            <param name="locationBarcode"></param>
+            <returns></returns>
+            <remarks>Used to get details on the products inside of a location</remarks>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.OrderController.Get(System.Boolean)">
+            <summary>
+            DEVELOPMENT TESTING ROUTE
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.OrderController.Get(System.Int32)">
+            <summary>
+            DEVELOPMENT TESTING ROUTE
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.OrderController.Post(Vans_SRMS_API.ViewModels.OrderCreateInput)">
+            <summary>
+            Use this route to place an order for a shoe to be picked from the stockroom
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.OrderController.Delete(System.Int32)">
+            <summary>
+            Use this route to cancel an open order
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.ProductController.Putaway(Vans_SRMS_API.ViewModels.PutawayInput)">
+            <summary>
+            Use this route to perform the bulk putaway process
+            </summary>
+            <param name="putaway"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.ProductController.Pick(Vans_SRMS_API.ViewModels.PickInput)">
+            <summary>
+            Use this route for both Open Picks and Order Fill Picks
+            </summary>
+            <param name="pick"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.ProductController.Import">
+            <summary>
+            Used for importing the Item Master List
+            </summary>
+            <returns></returns>
+            <remarks>Will kick off an async process that will continue running after the request has timed out</remarks>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.ProductController.Count">
+            <summary>
+            DEVELOPMENT TESTING ROUTE
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.ProductController.Random(System.Int32,System.Int32)">
+            <summary>
+            DEVELOPMENT TESTING ROUTE
+            </summary>
+            <param name="skip"></param>
+            <param name="take"></param>
+            <returns></returns>
+            <remarks>Grab any random products from the database for testing purposes.</remarks>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.ShoeController.Detail(Vans_SRMS_API.ViewModels.ShoeDetailInput)">
+            <summary>
+            Use this route to look up details of a particular shoe, including available sizes with in-stock quantities
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.ShoeController.Request(Vans_SRMS_API.ViewModels.ShoeRequestInput)">
+            <summary>
+            Use this route when a customer requests a shoe in a particular size.
+            This will record the request for reporting purposes
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+            <remarks>This would normally look up in-stock quantities for the shoe, but we are returning that data in the /api/Shoe/Detail route.  This route is still needed to track requests however.</remarks>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.ShoeController.GTIN(System.String)">
+            <summary>
+            Use this route to print labels for display models. 
+            Look up item information by GTIN number.
+            </summary>
+            <param name="GTIN"></param>
+            <returns>ShoeViewModel</returns>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.ShoeController.VN(System.String)">
+            <summary>
+            DEVELOPMENT TESTING ROUTE
+            </summary>
+            <param name="VN"></param>
+            <returns></returns>
+            <remarks>Same process as GTIN lookup, but searches by VN Number intead.</remarks>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.ShoeController.Options">
+            <summary>
+            Use this route to fill the dropdown lists for Style and Color
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.StoreController.Default">
+            <summary>
+            Find the default store for this server
+            </summary>
+            <remarks>
+            Use this route to find which store this server is in.  
+            
+            Change the default store for this server by calling a PUT request to '/api/Store/{id}'
+            </remarks>
+            <returns></returns>
+            <response code="200">Returns if store is found</response>
+            <response code="404">Returns if no store is found for that ID</response>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.StoreController.Details(System.Int32)">
+            <summary>
+            Get details for a specific store
+            </summary>
+            <param name="id">Vans Store Number</param>
+            <returns></returns>
+            <response code="200">Returns if store is found</response>
+            <response code="404">Returns if no store is found for that ID</response>
+        </member>
+        <member name="M:Vans_SRMS_API.Controllers.StoreController.SetStore(System.String)">
+            <summary>
+            Change the default store for this server
+            </summary>
+            <param name="id">Vans Store Number</param>
+            <returns></returns>
+            <response code="200">Returns if default store is set</response>
+            <response code="404">Returns if no store is found for that ID</response>
+        </member>
+        <member name="T:Vans_SRMS_API.Filters.DeviceAuthorizedAttribute">
+            <summary>
+            Validate device key from header value
+            </summary>
+        </member>
+        <member name="T:Vans_SRMS_API.Filters.AddRequiredHeaderParameter">
+            <summary>
+            Swagger documentation helper
+            </summary>
+        </member>
+        <member name="M:Vans_SRMS_API.Repositories.AuthenticationRepository.DeviceKeyIsValid(System.String)">
+            <summary>
+            Look up the store device by deviceKey, return the DeviceId from the Device table
+            </summary>
+            <param name="key"></param>
+            <returns>DeviceId from Device table</returns>
+        </member>
+        <member name="T:Vans_SRMS_API.ViewModels.ShoeDetailInput">
+            <summary>
+            Use either the VN Number field, or the Style and Color fields
+            </summary>
+        </member>
+    </members>
+</doc>

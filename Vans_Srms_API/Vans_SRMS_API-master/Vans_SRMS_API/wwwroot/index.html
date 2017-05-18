@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script language="javascript" type="text/javascript">
+        var socket;
+        var uri = "ws://" + window.location.host + "/ws";
+        var output;
+        var message = {
+            route: '',
+            deviceKey: '9e79d662-0ad1-4fb8-8099-5069906d0535',
+            data: {}
+        };
+
+        function onInit() {
+            output = document.getElementById("output");
+            doConnect();
+        }
+
+        function doConnect() {
+            socket = new WebSocket(uri);
+
+            socket.onopen = function (e) { write("opened " + uri); };
+            socket.onclose = function (e) { write("closed: " + e.code + " - " + e.wasClean + " - " + e.reason); };
+            socket.onerror = function (e) { write("Error: " + JSON.stringify(e)); write(uri); };
+
+            // this is the important function,  the server will be broadcasting the list of open orders thru the websocket connection
+            socket.onmessage = function (e) { write("Received: " + e.data); };
+        }
+
+        // this route will trigger the server to echo the request data
+        function echoTest() {
+            message.route = 'echoTest';
+            message.data = {
+                randomObject: {
+                    someAttribute: 'any valid json object is accepted'
+                }
+            };
+
+            doSend(message);
+        }
+
+        // sending a websocket request to any route other than 'echoTest' will trigger a server response with the latest open orders
+        function getOrders() {
+            message.route = 'anythingElse';            
+            doSend(message);
+        }
+               
+        function write(s) {
+            var p = document.createElement("p");
+            p.innerHTML = s;
+            output.appendChild(p);
+        }
+
+        // this is an example of how to send a message thru the websocket connection
+        // you shouldn't need to send messages, but it is an option if we need it
+        function doSend(message) {
+            var request = JSON.stringify(message);
+            write("sending: " + request);
+            socket.send(request);
+        }
+
+        window.onload = onInit;
+    </script>
+</head>
+<body>
+    <div id="output"></div>
+    <button onclick="echoTest();">Test sending message</button><br/>
+    <button onclick="getOrders();">Test getting all orders</button>
+</body>
+</html>
